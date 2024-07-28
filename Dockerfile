@@ -66,18 +66,18 @@ RUN apk --no-cache add \
     && rm -rf /var/cache/apk/*
 
 RUN addgroup \
-    -S -g ${GIT_GID_ENV:-1000} \
+    -S -g ${GIT_GID_ENV:-65539} \
     git && \
   adduser \
     -S -H -D \
     -h /data/git \
     -s /bin/bash \
-    -u ${GIT_UID_ENV:-1000} \
+    -u ${GIT_UID_ENV:-1034} \
     -G git \
     git && \
   echo "git:*" | chpasswd -e
 
-ENV USER=git
+USER 1034:1004 
 ENV GITEA_CUSTOM=/data/gitea
 
 VOLUME ["/data"]

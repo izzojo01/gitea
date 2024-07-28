@@ -60,13 +60,13 @@ RUN apk --no-cache add \
     && rm -rf /var/cache/apk/*
 
 RUN addgroup \
-    -S -g ${GIT_GID_ENV:-1000} \
+    -S -g ${GIT_GID_ENV:-65539} \
     git && \
   adduser \
     -S -H -D \
     -h /var/lib/gitea/git \
     -s /bin/bash \
-    -u ${GIT_UID_ENV:-1000} \
+    -u ${GIT_UID_ENV:-1034} \
     -G git \
     git
 
@@ -79,7 +79,8 @@ COPY --from=build-env --chown=root:root /go/src/code.gitea.io/gitea/environment-
 COPY --from=build-env /go/src/code.gitea.io/gitea/contrib/autocompletion/bash_autocomplete /etc/profile.d/gitea_bash_autocomplete.sh
 
 # git:git
-USER 1000:1000
+USER 1034:1004
+
 ENV GITEA_WORK_DIR=/var/lib/gitea
 ENV GITEA_CUSTOM=/var/lib/gitea/custom
 ENV GITEA_TEMP=/tmp/gitea
